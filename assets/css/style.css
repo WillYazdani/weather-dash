@@ -105,5 +105,30 @@ input {
     padding: 20px;
     border-radius: 10px;
     margin: 5px;
-    width: 15%;
+    width: 19%;
+}
+
+.past-searches {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+    color: deepskyblue;
+}
+
+.city-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    color: white;
+    background-color: grey;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5em;
+}
+
+.city-button:hover {
+    background-color: deepskyblue;
+    color: white;
 }

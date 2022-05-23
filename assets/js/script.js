@@ -19,6 +19,20 @@ function citySearch(city) {
                     weatherData(lat, lon, city, state);
                     console.log(lat, lon, city, state);
                 });
+
+                //save city to local localStorage
+                localStorage.setItem("city", city);
+
+                //save city to past searches
+                var pastSearches = document.getElementById("pastSearches");
+                var cityButton = document.createElement("button");
+                cityButton.className = "city-button";
+                cityButton.id = "cityButton";
+                cityButton.innerHTML = city;
+                pastSearches.appendChild(cityButton);
+
+                document.getElementById("cityButton").addEventListener("click", getCity);
+
             } else {
                 alert("City Not Found");
             }
@@ -60,9 +74,6 @@ function weatherData(lat, lon, city, state) {
                         forecastDisplay(forecastDate, forecastIconUrl, forecastTemp, forecastHumidity, forecastUv);
                     }
 
-                    
-
-                    localStorage.setItem("city", city);
                 });
             } else {
                 alert("City Not Found");
@@ -99,6 +110,10 @@ function forecastDisplay(forecastDate, forecastIconUrl, forecastTemp, forecastHu
     forecastCard.innerHTML += "<p>Humidity: " + forecastHumidity + "</p>";
     forecastCard.innerHTML += "<p>UV Index: " + forecastUv + "</p>";
     forecastWeek.appendChild(forecastCard);
+    //set max amount of cards to 5
+    if (forecastWeek.childElementCount >= 5) {
+        forecastWeek.removeChild(forecastWeek.firstChild);
+    }
 }
 
 document.getElementById("search").addEventListener("click", getCity);
