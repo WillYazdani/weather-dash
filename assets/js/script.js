@@ -2,7 +2,6 @@
 function getCity() {
     var cityName = document.getElementById("city").value;
     citySearch(cityName);
-    console.log(cityName);
 };
 
 //search city location
@@ -15,8 +14,10 @@ function citySearch(city) {
                 response.json().then(function(data) {
                     var lat = data[0].lat;
                     var lon = data[0].lon;
+                    var city = data[0].name;
+                    var state = data[0].state;
                     weatherData(lat, lon, city);
-                    console.log(lat, lon, city);
+                    console.log(lat, lon, city, state);
                 });
             } else {
                 alert("City Not Found");
@@ -29,20 +30,24 @@ function citySearch(city) {
 
 //get weather from location
 function weatherData(lat, lon) {
-    var weatherUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=e7cf4ee0f735e9abba44b8cb1343d86a"
+    var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&units=imperial&appid=e7cf4ee0f735e9abba44b8cb1343d86a"
 
     fetch(weatherUrl)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    var icon = data.weather[0].icon;
+                    var icon = data.current.weather[0].icon;
                     var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
-                    var temp = data.main.temp;
-                    var desc = data.weather[0].description;
-                    var wind = data.wind.speed + " mph";
-                    var humidity = data.main.humidity + "%";
+                    var temp = data.current.temp + "°F";
+                    var wind = data.wind_speed + " mph";
+                    var humidity = data.current.humidity + "%";
+                    var uv = data.current.uvi;
+                    var date = new Date(data.current.dt*1000).toLocaleDateString();
 
-                    console.log(iconUrl, temp, desc, wind, humidity);
+                    //weatherDisplay(iconUrl, temp, wind, humidity, date);
+                    console.log(date, iconUrl, temp, wind, humidity, uv);
+
+                    localStorage.setItem("city", city);
                 });
             } else {
                 alert("City Not Found");
@@ -52,5 +57,9 @@ function weatherData(lat, lon) {
         alert("error!!!");
     })
 };
+
+//function weatherDisplay(){}
+
+
 
 document.getElementById("search").addEventListener("click", getCity);
