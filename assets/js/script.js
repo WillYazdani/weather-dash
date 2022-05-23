@@ -16,7 +16,7 @@ function citySearch(city) {
                     var lon = data[0].lon;
                     var city = data[0].name;
                     var state = data[0].state;
-                    weatherData(lat, lon, city);
+                    weatherData(lat, lon, city, state);
                     console.log(lat, lon, city, state);
                 });
             } else {
@@ -29,7 +29,7 @@ function citySearch(city) {
 };
 
 //get weather from location
-function weatherData(lat, lon) {
+function weatherData(lat, lon, city, state) {
     var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&units=imperial&appid=e7cf4ee0f735e9abba44b8cb1343d86a"
 
     fetch(weatherUrl)
@@ -39,13 +39,13 @@ function weatherData(lat, lon) {
                     var icon = data.current.weather[0].icon;
                     var iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
                     var temp = data.current.temp + "°F";
-                    var wind = data.wind_speed + " mph";
+                    var wind = data.current.wind_speed + " mph";
                     var humidity = data.current.humidity + "%";
                     var uv = data.current.uvi;
                     var date = new Date(data.current.dt*1000).toLocaleDateString();
 
-                    //weatherDisplay(iconUrl, temp, wind, humidity, date);
-                    console.log(date, iconUrl, temp, wind, humidity, uv);
+                    weatherDisplay(city, state, date, iconUrl, temp, wind, humidity, uv);
+                    console.log(city, state, date, iconUrl, temp, wind, humidity, uv);
 
                     localStorage.setItem("city", city);
                 });
@@ -58,7 +58,19 @@ function weatherData(lat, lon) {
     })
 };
 
-//function weatherDisplay(){}
+//dom elements
+var currentWeather = document.getElementById("currentWeather");
+
+function weatherDisplay(city, state, date, iconUrl, temp, wind, humidity, uv){
+    currentWeather.innerHTML = "",
+    currentWeather.innerHTML += "<h2>" + city + ", " + state + "</h2>";
+    currentWeather.innerHTML += "<h3>" + date + "</h3>";
+    currentWeather.innerHTML += "<img src='" + iconUrl + "'>";
+    currentWeather.innerHTML += "<p>Temperature: " + temp + "</p>";
+    currentWeather.innerHTML += "<p>Wind Speed: " + wind + "</p>";
+    currentWeather.innerHTML += "<p>Humidity: " + humidity + "</p>";
+    currentWeather.innerHTML += "<p>UV Index: " + uv + "</p>";
+}
 
 
 

@@ -73,6 +73,16 @@ input {
     margin-bottom: 20px;
 }
 
+.city-details h2 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.city-details h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
 .week-forecast {
     padding: 20px;
     width: 100%;
