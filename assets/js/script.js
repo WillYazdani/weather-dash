@@ -47,6 +47,21 @@ function weatherData(lat, lon, city, state) {
                     weatherDisplay(city, state, date, iconUrl, temp, wind, humidity, uv);
                     console.log(city, state, date, iconUrl, temp, wind, humidity, uv);
 
+                    var forecast = data.daily;
+
+                    for (var i = 0; i < 5; i++) {
+                        var forecastDate = new Date(forecast[i].dt*1000).toLocaleDateString();
+                        var forecastIcon = forecast[i].weather[0].icon;
+                        var forecastIconUrl = "http://openweathermap.org/img/w/" + forecastIcon + ".png";
+                        var forecastTemp = forecast[i].temp.day + "°F";
+                        var forecastHumidity = forecast[i].humidity + "%";
+                        var forecastUv = forecast[i].uvi;
+
+                        forecastDisplay(forecastDate, forecastIconUrl, forecastTemp, forecastHumidity, forecastUv);
+                    }
+
+                    
+
                     localStorage.setItem("city", city);
                 });
             } else {
@@ -72,6 +87,18 @@ function weatherDisplay(city, state, date, iconUrl, temp, wind, humidity, uv){
     currentWeather.innerHTML += "<p>UV Index: " + uv + "</p>";
 }
 
+var forecastWeek = document.getElementById("forecastWeek");
 
+function forecastDisplay(forecastDate, forecastIconUrl, forecastTemp, forecastHumidity, forecastUv){
+    var forecastCard = document.createElement("div");
+    forecastCard.className = "forecast-card";
+    forecastCard.innerHTML = "",
+    forecastCard.innerHTML += "<h3>" + forecastDate + "</h3>";
+    forecastCard.innerHTML += "<img src='" + forecastIconUrl + "'>";
+    forecastCard.innerHTML += "<p>Temp: " + forecastTemp + "</p>";
+    forecastCard.innerHTML += "<p>Humidity: " + forecastHumidity + "</p>";
+    forecastCard.innerHTML += "<p>UV Index: " + forecastUv + "</p>";
+    forecastWeek.appendChild(forecastCard);
+}
 
 document.getElementById("search").addEventListener("click", getCity);
