@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css" />
 
     <title>Weather Dashboard</title>
@@ -12,31 +11,27 @@
 
 <body>
 
-    <header>
-        <h1 class="text-center">Weather Dashboard</h1>
-    </header>
+    <nav>
+        <h1>Weather Dashboard</h1>
+    </nav>
 
-    <div class="container-fluid row col-12 px-5">
+    <div class="content">
 
-        <div class="row">
+        <form class="city-search">
+            <label>Seach for a city:</label><br></br>
+            <input type="text" name="city" placeholder="City Name" required><br></br>
+            <button type="submit" name="city">Submit</button>
+        </form>
 
-            <div class="col px-5" id="citySearch">
-                <form>
-                    <div class="form-group">
-                        <label for="cityInput">Search for a City:</label>
-                        <input type="text" class="form-control" id="cityInput" placeholder="City Name">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+        <div class="city-wrapper">
+            <div class="city-details">
             </div>
 
+            <div class="week-forecast">
+            </div>
         </div>
 
-        <div class="col border border-primary" id="currentWeather">
-
-        </div>
-
-    </div>
+    </div> 
 
     <script src="/assets/js/script.js"></script>
 
